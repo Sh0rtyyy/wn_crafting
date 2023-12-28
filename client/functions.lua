@@ -1,6 +1,5 @@
 local PlayerData = {}
 local PlayerJob
-lib.locale()
 
 if Config.Framework == "ESX" then
     ESX = exports["es_extended"]:getSharedObject()

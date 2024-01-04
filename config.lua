@@ -112,7 +112,7 @@ Config.Craftings = {
         },
     },
     ["burgershot"] = {
-        jobs = {["burgershot"] = 0},, -- Required jobs to access table
+        jobs = {["burgershot"] = 0}, -- Required jobs to access table
         model = nil, -- Table model.
         label = 'Open burgershot crafting',  -- Target label
         icon = "fas fa-burger",

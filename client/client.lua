@@ -22,7 +22,7 @@ AddEventHandler('wn_crafting:setup', function()
                         distance = 1,
                     })
                 elseif Config.Target == 'qb-target' then 
-                    exports['qb-target']:AddTargetModel(object, {
+                    exports['qb-target']:AddTargetEntity(object, {
                     options = { 
                         { 
                             num = 1, 

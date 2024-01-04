@@ -58,7 +58,7 @@ AddEventHandler('wn_crafting:setup', function()
                         }
                     })
                 elseif Config.Target == 'qb-target' then 
-                    exports['qb-target']:AddBoxZone('crafting' .. name, vector4(coords.x, coords.y, coords.z), 1.5, 1.6, { 
+                    exports['qb-target']:AddBoxZone('crafting' .. name, vector3(coords.x, coords.y, coords.z), 1.5, 1.6, { 
                         name = 'crafting' .. name, 
                         heading = coords.w, 
                         debugPoly = Config.EnableDebug, 

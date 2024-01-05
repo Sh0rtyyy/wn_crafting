@@ -109,7 +109,7 @@ AddEventHandler('wn_crafting:menu', function(craftingType)
 
     lib.registerContext({
         id = 'packmenu',
-        title = locale('packweedmenu'),
+        title = "Crafting menu",
         options = Options,
     })
     lib.showContext('packmenu')

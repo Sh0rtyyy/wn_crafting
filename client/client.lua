@@ -29,6 +29,7 @@ AddEventHandler('wn_crafting:setup', function()
                             icon = craftingData.icon,
                             label = craftingData.label, 
                             targeticon = craftingData.icon,
+                            item = craftingData.item,
                             action = function() 
                                 TriggerEvent("wn_crafting:menu", name)   
                             end,
@@ -71,6 +72,7 @@ AddEventHandler('wn_crafting:setup', function()
                                 icon = craftingData.icon,
                                 label = craftingData.label, 
                                 targeticon = craftingData.icon,
+                                item = craftingData.item,
                                 action = function() 
                                     TriggerEvent("wn_crafting:menu", name)   
                                 end,

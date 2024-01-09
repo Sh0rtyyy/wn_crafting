@@ -13,6 +13,7 @@ Config.Craftings = {
         model = `gr_prop_gr_bench_04b`, -- Table model.
         label = 'Open police crafting', -- Target label
         icon = "fas fa-shield",
+        item = "badge", -- QB ONLY
         coords = { -- Table Coords
             [1] = vector4(461.5177, -981.1409, 30.6896, 273.3867),
             [2] = vector4(457.3632, -982.7820, 30.6896, 184.8602),
@@ -65,6 +66,7 @@ Config.Craftings = {
         model = `gr_prop_gr_bench_04b`, -- Table model.
         label = 'Open illegal crafting',  -- Target label
         icon = "fas fa-gun",
+        item = "illegal_card", -- QB ONLY
         coords = { -- Table Coords
             [1] = vector4(-478.1669, -1708.2946, 18.6960, 85.0696),
         },
@@ -116,6 +118,7 @@ Config.Craftings = {
         model = nil, -- Table model.
         label = 'Open burgershot crafting',  -- Target label
         icon = "fas fa-burger",
+        item = nil, -- QB ONLY
         coords = { -- Table Coords
             [1] = vector4(-1194.9108, -897.4638, 13.8862, 324.5184),
         },

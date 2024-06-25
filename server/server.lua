@@ -1,4 +1,4 @@
-local webhook = "https://discord.com/api/webhooks/1022085112923430962/1vtvvyE8_WQFcaR2bvYayk7B2fH526yGbGNB3zTb-BjG83swD02-rHlUiCxVatEFy_Uo"
+local webhook = ""
 
 RegisterNetEvent('wn_crafting:giveitems')
 AddEventHandler('wn_crafting:giveitems', function(craftingType, craftingOption)
@@ -22,7 +22,8 @@ AddEventHandler('wn_crafting:giveitems', function(craftingType, craftingOption)
 
     -- Process crafting based on flag for the current crafting option
     if hasRequiredItems then
-        lib.callback.await('wn_crafting:serverprogress', src, text, time)
+        local result = lib.callback.await('wn_crafting:serverprogress', src, text, time)
+        if not result then return end
         -- Process crafting if all required items are present for the current option
         for _, requiredItem in ipairs(craftingOption.requireditems) do
             local needitem = requiredItem.name

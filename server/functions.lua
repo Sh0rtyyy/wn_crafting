@@ -1,5 +1,3 @@
-local sellbebhook = "https://discord.com/api/webhooks/1022085112923430962/1vtvvyE8_WQFcaR2bvYayk7B2fH526yGbGNB3zTb-BjG83swD02-rHlUiCxVatEFy_Uo"
-
 if Config.Framework == "ESX" then
     ESX = exports["es_extended"]:getSharedObject()
 elseif Config.Framework == "qbcore" then

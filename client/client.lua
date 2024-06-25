@@ -132,19 +132,25 @@ end)
 
 lib.callback.register('wn_crafting:serverprogress', function(src, text, time)
 
-    return lib.progressBar({
-        label = src,
+    if lib.progressBar({
         duration = text,
+        label = src,
+        useWhileDead = false,
         canCancel = true,
         disable = {
+            car = true,
             move = true,
-            combat = true,
         },
         anim = {
             dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
             clip = 'machinic_loop_mechandplayer',
         }
-    })
+    }) then
+        return true
+    else
+        return false
+    end
+
 end)
 
 function despawnAllObjects()

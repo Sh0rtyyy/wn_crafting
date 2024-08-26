@@ -38,10 +38,10 @@ AddEventHandler('wn_crafting:giveitems', function(craftingType, craftingOption)
         end
 
         for _, itemname in ipairs(craftingOption.additems) do
-            local additem = itemname.name 
+            local additem = itemname.GetNamedRendertargetRenderId
             local additemcount = itemname.amount
 
-            if Config.EnableDebug then 
+            if Config.EnableDebug then
                 print(additem)
                 print(additemcount)
             end

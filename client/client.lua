@@ -2,17 +2,16 @@ local spawnedObjects = {}
 
 RegisterNetEvent('wn_crafting:setup')
 AddEventHandler('wn_crafting:setup', function()
-    for name, craftingData in pairs(Config.Craftings) do 
-        
+    for name, craftingData in pairs(Config.Craftings) do
         for _, coords in pairs(craftingData.coords) do
-            if craftingData.model then 
+            if craftingData.model then
                 local object = CreateObject(craftingData.model, coords.x, coords.y, coords.z - 1, true, false, false)
                 SetEntityHeading(object, coords.w)
                 table.insert(spawnedObjects, object)  -- Store reference to the spawned object
 
-                if Config.Target == 'ox_target' then 
+                if Config.Target == 'ox_target' then
                     exports.ox_target:addSphereZone({
-                        coords = vector4(coords.x, coords.y, coords.z, coords.w),
+                        coords = vector4(coords.x, coords.y, coords.z-1, coords.w),
                         radius = 1,
                         debug = Config.EnableDebug,
                         options = {
@@ -22,38 +21,38 @@ AddEventHandler('wn_crafting:setup', function()
                                 groups = craftingData.jobs,
                                 event = 'wn_crafting:menu',
                                 onSelect = function()
-                                    TriggerEvent("wn_crafting:menu", name)   
+                                    TriggerEvent("wn_crafting:menu", name)
                                 end,
                                 distance = 1,
                             }
                         }
                     })
-                elseif Config.Target == 'qb-target' then 
-                    exports['qb-target']:AddBoxZone('crafting' .. name, vector3(coords.x, coords.y, coords.z), 1.5, 1.6, { 
-                        name = 'crafting' .. name, 
-                        heading = coords.w, 
-                        debugPoly = Config.EnableDebug, 
+                elseif Config.Target == 'qb-target' then
+                    exports['qb-target']:AddBoxZone('crafting' .. name, vector3(coords.x, coords.y, coords.z), 1.5, 1.6, {
+                        name = 'crafting' .. name,
+                        heading = coords.w,
+                        debugPoly = Config.EnableDebug,
                          minZ = 19,
                          maxZ = 219,
                         }, {
                         options = {
                             {
-                                num = 1, 
+                                num = 1,
                                 icon = craftingData.icon,
-                                label = craftingData.label, 
+                                label = craftingData.label,
                                 targeticon = craftingData.icon,
                                 item = craftingData.item,
-                                action = function() 
-                                    TriggerEvent("wn_crafting:menu", name)   
+                                action = function()
+                                    TriggerEvent("wn_crafting:menu", name)
                                 end,
-                                job = craftingData.jobs, 
+                                job = craftingData.jobs,
                             }
                         },
                         distance = 2.5,
                     })
                 end
-            else 
-                if Config.Target == 'ox_target' then 
+            else
+                if Config.Target == 'ox_target' then
                     exports.ox_target:addSphereZone({
                         coords = vector4(coords.x, coords.y, coords.z, coords.w),
                         radius = 1,
@@ -65,31 +64,31 @@ AddEventHandler('wn_crafting:setup', function()
                                 groups = craftingData.jobs,
                                 event = 'wn_crafting:menu',
                                 onSelect = function()
-                                    TriggerEvent("wn_crafting:menu", name)   
+                                    TriggerEvent("wn_crafting:menu", name)
                                 end,
                                 distance = 1,
                             }
                         }
                     })
-                elseif Config.Target == 'qb-target' then 
-                    exports['qb-target']:AddBoxZone('crafting' .. name, vector3(coords.x, coords.y, coords.z), 1.5, 1.6, { 
-                        name = 'crafting' .. name, 
-                        heading = coords.w, 
-                        debugPoly = Config.EnableDebug, 
+                elseif Config.Target == 'qb-target' then
+                    exports['qb-target']:AddBoxZone('crafting' .. name, vector3(coords.x, coords.y, coords.z), 1.5, 1.6, {
+                        name = 'crafting' .. name,
+                        heading = coords.w,
+                        debugPoly = Config.EnableDebug,
                          minZ = 19,
                          maxZ = 219,
                         }, {
                         options = {
                             {
-                                num = 1, 
+                                num = 1,
                                 icon = craftingData.icon,
-                                label = craftingData.label, 
+                                label = craftingData.label,
                                 targeticon = craftingData.icon,
                                 item = craftingData.item,
-                                action = function() 
-                                    TriggerEvent("wn_crafting:menu", name)   
+                                action = function()
+                                    TriggerEvent("wn_crafting:menu", name)
                                 end,
-                                job = craftingData.jobs, 
+                                job = craftingData.jobs,
                             }
                         },
                         distance = 2.5,
@@ -97,9 +96,7 @@ AddEventHandler('wn_crafting:setup', function()
                 end
             end
         end
-        
     end
-    
 end)
 
 RegisterNetEvent('wn_crafting:menu')

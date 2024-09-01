@@ -46,6 +46,7 @@ AddEventHandler('wn_crafting:setup', function()
                                     TriggerEvent("wn_crafting:menu", name)
                                 end,
                                 job = craftingData.jobs,
+                                gang = craftingData.gang,
                             }
                         },
                         distance = 2.5,
@@ -89,6 +90,7 @@ AddEventHandler('wn_crafting:setup', function()
                                     TriggerEvent("wn_crafting:menu", name)
                                 end,
                                 job = craftingData.jobs,
+                                gang = craftingData.gang,
                             }
                         },
                         distance = 2.5,

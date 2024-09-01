@@ -9,7 +9,8 @@ Config.Target = "ox_target" -- ox_target or qb-target
 
 Config.Craftings = {
     ["police"] = {
-        jobs = {["police"] = 0}, -- Required jobs to access table
+        jobs = {["police"] = 0}, -- Required jobs to access table or nil
+        gang = nil, -- Required gang to access table or nil (QB ONLY)
         model = `gr_prop_gr_bench_04b`, -- Table model.
         label = 'Open police crafting', -- Target label
         icon = "fas fa-shield",
@@ -62,7 +63,8 @@ Config.Craftings = {
         },
     },
     ["illegal"] = {
-        jobs = nil, -- Required jobs to access table
+        jobs = nil, -- Required jobs to access table or nil
+        gang = nil, -- Required gang to access table or nil (QB ONLY)
         model = `gr_prop_gr_bench_04b`, -- Table model.
         label = 'Open illegal crafting',  -- Target label
         icon = "fas fa-gun",
@@ -114,7 +116,8 @@ Config.Craftings = {
         },
     },
     ["burgershot"] = {
-        jobs = {["burgershot"] = 0}, -- Required jobs to access table
+        jobs = {["burgershot"] = 0}, -- Required jobs to access table or nil
+        gang = nil, -- Required gang to access table or nil (QB ONLY)
         model = nil, -- Table model.
         label = 'Open burgershot crafting',  -- Target label
         icon = "fas fa-burger",

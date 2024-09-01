@@ -25,11 +25,19 @@ function GetItem(name, count, source)
         else
             return false
         end
+    elseif Config.Framework == "qbcore-new" then
+        local hasItem = exports['qb-inventory']:HasItem(src, name, count)
+        if hasItem then
+            return true
+        else
+            return false
+        end
     end
 end
 
 function AddItem(name, count, source)
-    local src = source 
+    local src = source
+    print(src)
 
     if Config.Framework == "ESX" then
         local xPlayer = ESX.GetPlayerFromId(src)
@@ -38,6 +46,8 @@ function AddItem(name, count, source)
         local xPlayer = QBCore.Functions.GetPlayer(src)
         xPlayer.Functions.AddItem(name, count, nil, nil)
         TriggerClientEvent("inventory:client:ItemBox", src, QBCore.Shared.Items[name], "add", count)
+    elseif Config.Framework == "qbcore-new" then
+        exports['qb-inventory']:AddItem(src, name, count, false, false, 'wn_crafting:additem')
     end
 end
 
@@ -51,5 +61,7 @@ function RemoveItem(name, count, source)
         local xPlayer = QBCore.Functions.GetPlayer(src)
         xPlayer.Functions.RemoveItem(name, count, nil, nil)
         TriggerClientEvent("inventory:client:ItemBox", src, QBCore.Shared.Items[name], "remove", count)
+    elseif Config.Framework == "qbcore-new" then
+        exports['qb-inventory']:RemoveItem(src, name, count, false, 'wn_upnatom:removeitem')
     end
 end

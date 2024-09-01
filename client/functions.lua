@@ -18,7 +18,7 @@ if Config.Framework == "ESX" then
         Wait(500)
     end)
 
-elseif Config.Framework == "qbcore" then
+elseif Config.Framework == "qbcore" or Config.Framework == "qbcore-new" then
     QBCore = exports['qb-core']:GetCoreObject()
 
     AddEventHandler('QBCore:Client:OnPlayerLoaded', function()

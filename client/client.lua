@@ -32,8 +32,8 @@ AddEventHandler('wn_crafting:setup', function()
                         name = 'crafting' .. name,
                         heading = coords.w,
                         debugPoly = Config.EnableDebug,
-                         minZ = 19,
-                         maxZ = 219,
+                            minZ = coords.z - 10,
+                            maxZ = coords.z + 10,
                         }, {
                         options = {
                             {
@@ -76,8 +76,8 @@ AddEventHandler('wn_crafting:setup', function()
                         name = 'crafting' .. name,
                         heading = coords.w,
                         debugPoly = Config.EnableDebug,
-                         minZ = 19,
-                         maxZ = 219,
+                            minZ = coords.z - 10,
+                            maxZ = coords.z + 10,
                         }, {
                         options = {
                             {

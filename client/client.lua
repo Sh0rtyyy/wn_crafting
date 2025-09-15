@@ -159,8 +159,10 @@ function despawnAllObjects()
     spawnedObjects = {} 
 end
 
-CreateThread(function()
-    TriggerEvent('wn_crafting:setup')
+AddEventHandler('onResourceStart', function(resourceName)
+    if GetCurrentResourceName() == resourceName then
+        TriggerEvent('wn_crafting:setup')
+    end
 end)
 
 AddEventHandler('onResourceStop', function(resourceName)
@@ -168,3 +170,4 @@ AddEventHandler('onResourceStop', function(resourceName)
         despawnAllObjects()
     end
 end)
+

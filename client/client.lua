@@ -9,93 +9,31 @@ AddEventHandler('wn_crafting:setup', function()
                 SetEntityHeading(object, coords.w)
                 table.insert(spawnedObjects, object)  -- Store reference to the spawned object
 
-                if Config.Target == 'ox_target' then
-                    exports.ox_target:addSphereZone({
-                        coords = vector4(coords.x, coords.y, coords.z-1, coords.w),
-                        radius = 1,
-                        debug = Config.EnableDebug,
-                        options = {
-                            {
-                                icon = craftingData.icon,
-                                label = craftingData.label,
-                                groups = craftingData.jobs,
-                                event = 'wn_crafting:menu',
-                                onSelect = function()
-                                    TriggerEvent("wn_crafting:menu", name)
-                                end,
-                                distance = 1,
-                            }
-                        }
-                    })
-                elseif Config.Target == 'qb-target' then
-                    exports['qb-target']:AddBoxZone('crafting' .. name, vector3(coords.x, coords.y, coords.z), 1.5, 1.6, {
-                        name = 'crafting' .. name,
-                        heading = coords.w,
-                        debugPoly = Config.EnableDebug,
-                            minZ = coords.z - 10,
-                            maxZ = coords.z + 10,
-                        }, {
-                        options = {
-                            {
-                                num = 1,
-                                icon = craftingData.icon,
-                                label = craftingData.label,
-                                targeticon = craftingData.icon,
-                                item = craftingData.item,
-                                action = function()
-                                    TriggerEvent("wn_crafting:menu", name)
-                                end,
-                                job = craftingData.jobs,
-                                gang = craftingData.gang,
-                            }
-                        },
-                        distance = 2.5,
-                    })
-                end
+                AddSphereZone(name, coords, 1, {
+                    {
+                        icon = craftingData.icon,
+                            label = craftingData.label,
+                            groups = craftingData.jobs,
+                            event = 'wn_crafting:menu',
+                            onSelect = function()
+                                TriggerEvent("wn_crafting:menu", name)
+                            end,
+                            distance = 1,
+                    }
+                })
             else
-                if Config.Target == 'ox_target' then
-                    exports.ox_target:addSphereZone({
-                        coords = vector4(coords.x, coords.y, coords.z, coords.w),
-                        radius = 1,
-                        debug = Config.EnableDebug,
-                        options = {
-                            {
-                                icon = craftingData.icon,
-                                label = craftingData.label,
-                                groups = craftingData.jobs,
-                                event = 'wn_crafting:menu',
-                                onSelect = function()
-                                    TriggerEvent("wn_crafting:menu", name)
-                                end,
-                                distance = 1,
-                            }
-                        }
-                    })
-                elseif Config.Target == 'qb-target' then
-                    exports['qb-target']:AddBoxZone('crafting' .. name, vector3(coords.x, coords.y, coords.z), 1.5, 1.6, {
-                        name = 'crafting' .. name,
-                        heading = coords.w,
-                        debugPoly = Config.EnableDebug,
-                            minZ = coords.z - 10,
-                            maxZ = coords.z + 10,
-                        }, {
-                        options = {
-                            {
-                                num = 1,
-                                icon = craftingData.icon,
-                                label = craftingData.label,
-                                targeticon = craftingData.icon,
-                                item = craftingData.item,
-                                action = function()
-                                    TriggerEvent("wn_crafting:menu", name)
-                                end,
-                                job = craftingData.jobs,
-                                gang = craftingData.gang,
-                            }
-                        },
-                        distance = 2.5,
-                    })
-                end
+                AddSphereZone(name, coords, 1, {
+                    {
+                        icon = craftingData.icon,
+                            label = craftingData.label,
+                            groups = craftingData.jobs,
+                            event = 'wn_crafting:menu',
+                            onSelect = function()
+                                TriggerEvent("wn_crafting:menu", name)
+                            end,
+                            distance = 1,
+                    }
+                })
             end
         end
     end
@@ -103,18 +41,25 @@ end)
 
 RegisterNetEvent('wn_crafting:menu')
 AddEventHandler('wn_crafting:menu', function(craftingType)
-
+    local schematics = requestPlayerSchematics()
     local craftingData = Config.Craftings[craftingType]
 
     local Options = {}
 
     for _, craftingOption in ipairs(craftingData.items) do
-        local option = {
-            title = craftingOption.title,
-            description = craftingOption.description,
-            image = craftingOption.image,
+        local co = craftingOption
+        local reqSchematic = co.requiredSchematics
+        local disabled = false
+        if reqSchematic ~= nil then 
+            disabled = not hasPlayerRequiredSchematic(reqSchematic)
+        end
+            local option = {
+            title = co.title,
+            description = co.description,
+            disable = disabled,
+            image = co.image,
             onSelect = function()
-                TriggerServerEvent('wn_crafting:giveitems', craftingType, craftingOption)
+                TriggerServerEvent('wn_crafting:giveitems', craftingType, co)
             end,
         }
 
@@ -156,7 +101,7 @@ function despawnAllObjects()
     for _, object in ipairs(spawnedObjects) do
         DeleteEntity(object)
     end
-    spawnedObjects = {} 
+    spawnedObjects = {}
 end
 
 AddEventHandler('onResourceStart', function(resourceName)

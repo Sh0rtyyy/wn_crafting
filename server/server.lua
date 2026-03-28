@@ -1,4 +1,5 @@
 local webhook = ""
+PlayerSchematics = PlayerSchematics or {}
 
 RegisterNetEvent('wn_crafting:giveitems')
 AddEventHandler('wn_crafting:giveitems', function(craftingType, craftingOption)
@@ -61,6 +62,15 @@ AddEventHandler('wn_crafting:giveitems', function(craftingType, craftingOption)
         })
     end
 
+end)
+
+lib.callback.register('wn_crafting:requestChematicsData', function()
+    local src = source
+    local schematics = RequestSchematicsFromDatabase(src)
+
+    PlayerSchematics[src] = schematics
+
+    return schematics
 end)
 
 function DiscordLog(webhook,name,message,color)

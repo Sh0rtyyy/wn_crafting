@@ -6,9 +6,15 @@ Config.Framework = "ESX" -- ESX, qbcore, qbcore-new
 Config.EnableDebug = false -- Enable/Disable prints and showing box of targets
 Config.Target = "ox_target" -- ox_target or qb-target
 
+Config.Schematics = {
+    ["armour25"] = "Armour 25",
+    ["heavysniper"] = "Heavy Snipers",
+    ["gunparts"] = "Gun Parts",
+    ["Bomb"] = "Bomb",
+},
 
 Config.Craftings = {
-    ["police"] = {
+    ["police"] = { -- UNIQUE Index for crafting identification 
         jobs = {["police"] = 0}, -- Required jobs to access table or nil
         gang = nil, -- Required gang to access table or nil (QB ONLY)
         model = `gr_prop_gr_bench_04b`, -- Table model.
@@ -26,6 +32,7 @@ Config.Craftings = {
                 progressbar = "Making armour 25",
                 image = "https://cdn.discordapp.com/attachments/886558594408022028/1189358208767250472/25armour.png?ex=659ddf26&is=658b6a26&hm=e9184d45d88fc272873504d4353f370f0b2e429b8ee27ec6625009a309d8bd29&",
                 duration = 1000, -- duration to craft the item after action is complete.
+                requiredSchematics = "armour25",
                 requireditems = { -- Items required to craft.
                     {name = "copper", amount = 50},
                 },
@@ -39,6 +46,7 @@ Config.Craftings = {
                 progressbar = "Making Heavysniper",
                 image = "https://cdn.discordapp.com/attachments/886558594408022028/1189358403714297896/WEAPON_HEAVYSNIPER.png?ex=659ddf54&is=658b6a54&hm=efbe8aefbc5bae6b2f404ddc030bebb594a70e375a8bb66b52bf7eefb48e61d1&",
                 duration = 5000, -- duration to craft the item after action is complete.
+                requiredSchematics = "heavysniper",
                 requireditems = { -- Items required to craft.
                     {name = "steel", amount = 50},
                     {name = "iron", amount = 50},
@@ -53,6 +61,7 @@ Config.Craftings = {
                 progressbar = "Making Extended Sniper Clip",
                 image = "https://cdn.discordapp.com/attachments/886558594408022028/1189358633268564028/at_clip_extended_sniper.png?ex=659ddf8b&is=658b6a8b&hm=b0eabc7464cc0c9eb514e4aac798dee5180de6e97276742b85ece910330e6e4f&",
                 duration = 5000, -- duration to craft the item after action is complete.
+                requiredSchematics = "gunparts",
                 requireditems = { -- Items required to craft.
                     {name = "steel", amount = 50},
                 },
@@ -62,7 +71,7 @@ Config.Craftings = {
             },
         },
     },
-    ["illegal"] = {
+    ["illegal"] = { -- UNIQUE Index for crafting identification 
         jobs = nil, -- Required jobs to access table or nil
         gang = nil, -- Required gang to access table or nil (QB ONLY)
         model = `gr_prop_gr_bench_04b`, -- Table model.
@@ -79,6 +88,7 @@ Config.Craftings = {
                 progressbar = "Making armour 75",
                 image = "https://cdn.discordapp.com/attachments/886558594408022028/1189358952408944770/75armour.png?ex=659ddfd7&is=658b6ad7&hm=a405c9326fb66f84931210529adf589028e3910c909ce701005259a3df08b302&",
                 duration = 1000, -- duration to craft the item after action is complete.
+                requiredSchematics = false,
                 requireditems = { -- Items required to craft.
                     {name = "copper", amount = 75},
                 },
@@ -92,6 +102,7 @@ Config.Craftings = {
                 progressbar = "Making AP Pistol",
                 image = "https://cdn.discordapp.com/attachments/886558594408022028/1189359244521254943/WEAPON_APPISTOL.png?ex=659de01d&is=658b6b1d&hm=b73881577f3d0b4e93aee141dfd7b943cb410fd8d2d758b108e6365621273ddf&",
                 duration = 5000, -- duration to craft the item after action is complete.
+                requiredSchematics = "gunparts",
                 requireditems = { -- Items required to craft.
                     {name = "steel", amount = 50},
                     {name = "iron", amount = 50},
@@ -106,6 +117,7 @@ Config.Craftings = {
                 progressbar = "Making Bomb",
                 image = "https://cdn.discordapp.com/attachments/886558594408022028/1189359394786377798/thermite_h.png?ex=659de040&is=658b6b40&hm=f37dcd4b5f9ae8bba5834fe138f953551d5752942b40ec052c399bfa25ca49ee&",
                 duration = 5000, -- duration to craft the item after action is complete.
+                requiredSchematics = "bomb",
                 requireditems = { -- Items required to craft.
                     {name = "steel", amount = 50},
                 },
@@ -115,7 +127,7 @@ Config.Craftings = {
             },
         },
     },
-    ["burgershot"] = {
+    ["burgershot"] = { -- UNIQUE Index for crafting identification 
         jobs = {["burgershot"] = 0}, -- Required jobs to access table or nil
         gang = nil, -- Required gang to access table or nil (QB ONLY)
         model = nil, -- Table model.

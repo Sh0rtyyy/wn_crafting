@@ -133,3 +133,70 @@ else
         targetZones = {}
     end)
 end
+
+-- Credits to V-Scripts for their v-raycast
+
+function RotationToDirection(rotation)
+    local radRotation = vector3(math.rad(rotation.x), math.rad(rotation.y), math.rad(rotation.z))
+    return vector3(
+        -math.sin(radRotation.z) * math.abs(math.cos(radRotation.x)),
+        math.cos(radRotation.z) * math.abs(math.cos(radRotation.x)),
+        math.sin(radRotation.x)
+    )
+end
+
+function RayCastGamePlayCamera(distance)
+    local camRot = GetGameplayCamRot()
+    local camPos = GetGameplayCamCoord()
+    local direction = RotationToDirection(camRot)
+    local dest = camPos + (direction * distance)
+
+    local rayHandle = StartShapeTestRay(camPos.x, camPos.y, camPos.z, dest.x, dest.y, dest.z, -1, playerId, 0)
+    local _, hit, endCoords, _, entity = GetShapeTestResult(rayHandle)
+
+    return hit, endCoords, entity
+end
+
+function DrawEntityBoundingBox(entity)
+    if not DoesEntityExist(entity) then return end
+
+    local model = GetEntityModel(entity)
+    if not model or model == 0 then return end
+
+    local min, max = GetModelDimensions(model)
+
+    local frontBottomLeft  = GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, min.z)
+    local frontBottomRight = GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, min.z)
+    local backBottomLeft   = GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, min.z)
+    local backBottomRight  = GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, min.z)
+
+    local frontTopLeft  = GetOffsetFromEntityInWorldCoords(entity, min.x, min.y, max.z)
+    local frontTopRight = GetOffsetFromEntityInWorldCoords(entity, max.x, min.y, max.z)
+    local backTopLeft   = GetOffsetFromEntityInWorldCoords(entity, min.x, max.y, max.z)
+    local backTopRight  = GetOffsetFromEntityInWorldCoords(entity, max.x, max.y, max.z)
+
+
+    local function DrawEdge(p1, p2, r, g, b, a)
+        DrawLine(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, r, g, b, a)
+    end
+
+    local edgeColor = boxcolor
+
+    -- Bottom edges
+    DrawEdge(frontBottomLeft, frontBottomRight, edgeColor.r, edgeColor.g, edgeColor.b, edgeColor.a)
+    DrawEdge(frontBottomRight, backBottomRight, edgeColor.r, edgeColor.g, edgeColor.b, edgeColor.a)
+    DrawEdge(backBottomRight, backBottomLeft, edgeColor.r, edgeColor.g, edgeColor.b, edgeColor.a)
+    DrawEdge(backBottomLeft, frontBottomLeft, edgeColor.r, edgeColor.g, edgeColor.b, edgeColor.a)
+
+    -- Top edges
+    DrawEdge(frontTopLeft, frontTopRight, edgeColor.r, edgeColor.g, edgeColor.b, edgeColor.a)
+    DrawEdge(frontTopRight, backTopRight, edgeColor.r, edgeColor.g, edgeColor.b, edgeColor.a)
+    DrawEdge(backTopRight, backTopLeft, edgeColor.r, edgeColor.g, edgeColor.b, edgeColor.a)
+    DrawEdge(backTopLeft, frontTopLeft, edgeColor.r, edgeColor.g, edgeColor.b, edgeColor.a)
+
+    -- Vertical edges
+    DrawEdge(frontBottomLeft, frontTopLeft, edgeColor.r, edgeColor.g, edgeColor.b, edgeColor.a)
+    DrawEdge(frontBottomRight, frontTopRight, edgeColor.r, edgeColor.g, edgeColor.b, edgeColor.a)
+    DrawEdge(backBottomLeft, backTopLeft, edgeColor.r, edgeColor.g, edgeColor.b, edgeColor.a)
+    DrawEdge(backBottomRight, backTopRight, edgeColor.r, edgeColor.g, edgeColor.b, edgeColor.a)
+end

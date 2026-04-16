@@ -13,6 +13,60 @@ Config.Schematics = {
     ["Bomb"] = "Bomb",
 },
 
+Config.PlacebleCraftings = {
+    ["drugs"] = { -- UNIQUE Index for crafting identification 
+        itemName = "drugs_table", -- Required item for spawn
+        model = `gr_prop_gr_bench_04b`, -- Table model.
+        label = 'Open police crafting', -- Target label
+        icon = "fas fa-shield",
+        items = { -- Items in the crafting table.
+            {
+                title = "Armour 25",
+                description = "50x Copper",
+                progressbar = "Making armour 25",
+                image = "https://cdn.discordapp.com/attachments/886558594408022028/1189358208767250472/25armour.png?ex=659ddf26&is=658b6a26&hm=e9184d45d88fc272873504d4353f370f0b2e429b8ee27ec6625009a309d8bd29&",
+                duration = 1000, -- duration to craft the item after action is complete.
+                requiredSchematics = "armour25",
+                requireditems = { -- Items required to craft.
+                    {name = "copper", amount = 50},
+                },
+                additems = { -- Items that will be given after craft is done
+                    {name = "25armour", amount = 1},
+                },
+            },
+            {
+                title = "Heavysniper",
+                description = "50x Steel, 50x Iron",
+                progressbar = "Making Heavysniper",
+                image = "https://cdn.discordapp.com/attachments/886558594408022028/1189358403714297896/WEAPON_HEAVYSNIPER.png?ex=659ddf54&is=658b6a54&hm=efbe8aefbc5bae6b2f404ddc030bebb594a70e375a8bb66b52bf7eefb48e61d1&",
+                duration = 5000, -- duration to craft the item after action is complete.
+                requiredSchematics = "heavysniper",
+                requireditems = { -- Items required to craft.
+                    {name = "steel", amount = 50},
+                    {name = "iron", amount = 50},
+                },
+                additems = { -- Items that will be given after craft is done
+                    {name = "WEAPON_HEAVYSNIPER", amount = 1},
+                },
+            },
+            {
+                title = "Extended Sniper Clip",
+                description = "50x Steel",
+                progressbar = "Making Extended Sniper Clip",
+                image = "https://cdn.discordapp.com/attachments/886558594408022028/1189358633268564028/at_clip_extended_sniper.png?ex=659ddf8b&is=658b6a8b&hm=b0eabc7464cc0c9eb514e4aac798dee5180de6e97276742b85ece910330e6e4f&",
+                duration = 5000, -- duration to craft the item after action is complete.
+                requiredSchematics = "gunparts",
+                requireditems = { -- Items required to craft.
+                    {name = "steel", amount = 50},
+                },
+                additems = { -- Items that will be given after craft is done
+                    {name = "at_clip_extended_sniper", amount = 1},
+                },
+            },
+        },
+    }
+}
+
 Config.Craftings = {
     ["police"] = { -- UNIQUE Index for crafting identification 
         jobs = {["police"] = 0}, -- Required jobs to access table or nil

@@ -1,11 +1,19 @@
-for schematic, _ in pairs(Config.Schematics) do
-    UseItem(schematic)
-end
-
 if Config.Framework == "ESX" then
     ESX = exports["es_extended"]:getSharedObject()
 elseif Config.Framework == "qbcore" then
     QBCore = exports['qb-core']:GetCoreObject()
+end
+
+function CheckDistance(source, TargetCoords)
+    local src = source
+
+    local coords = GetEntityCoords(GetPlayerPed(src))
+    local distance = #(coords - TargetCoords)
+    if distance < maxDistance then
+        return true
+    else
+        return false
+    end
 end
 
 function GetItem(name, count, source)
@@ -56,7 +64,7 @@ function AddItem(name, count, source)
 end
 
 function RemoveItem(name, count, source)
-    local src = source 
+    local src = source
 
     if Config.Framework == "ESX" then
         local xPlayer = ESX.GetPlayerFromId(src)
@@ -120,11 +128,30 @@ function RequestSchematicsFromDatabase(source)
     return {}
 end
 
+function hasPlayerRequiredSchematic(source, schematic)
+    for _, v in ipairs(PlayerSchematics[source]) do
+        if v == schematic then
+            return true
+        end
+    end
+    return false
+end
+
+
 
 --- DATABAZA: ALTER TABLE users ADD COLUMN schematics JSON;
 --- STRUCTURE: ["armour25", "gunparts"]
+for k, _ in pairs(Config.Schematics) do
+    schematic = k
+    RegisterUsable(schematic, function(source)
+        local src = source
+        if hasPlayerRequiredSchematic[source] then print("Has chematics") return end
+        UnlockSchematic(src, schematic)
+    end)
+end
 
 function UnlockSchematic(source, schematic)
+    local src = source
     local identifier = GetIdentifier(src) -- you need to define this based on framework
 
     -- Add to player table (runtime)

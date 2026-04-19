@@ -1,13 +1,13 @@
 local spawnedCraftings = spawnedCraftings or {}
 local placingCrafing = false
 
-RegisterNetEvent("wn_crafting:spawnCrafting", function(index)
+RegisterNetEvent("wn_crafting:placeCrafting", function(index)
     local craftingIndex = index
-    local model = Config.PlacebleCraftings[craftingIndex].model
-    local objectModel = GetHashKey(model)
+    local objectModel = Config.PlacebleCraftings[craftingIndex].model
 
     placingCrafing = not placingCrafing
 
+    print("objectModel", objectModel)
     lib.requestModel(objectModel, 1000)
 
     object = CreateObject(objectModel, GetEntityCoords(cache.ped), true, true, false)
@@ -21,8 +21,9 @@ RegisterNetEvent("wn_crafting:spawnCrafting", function(index)
     })
 
     CreateThread(function()
-        while inObjectPreview do
-            local hit, _, coords, _, _ = lib.raycast.cam(1, 4)
+        while placingCrafing do
+            local hit, coords, entity = RayCastGamePlayCamera(100)
+            --local hit, _, coords, _, _ = lib.raycast.cam(1, 4)
             if hit then
                 SetEntityCoords(object, coords.x, coords.y, coords.z)
                 PlaceObjectOnGroundProperly(object)
@@ -38,6 +39,10 @@ RegisterNetEvent("wn_crafting:spawnCrafting", function(index)
                 if IsControlJustPressed(0, 38) then
                     lib.hideTextUI()
                     local heading = GetEntityHeading(object)
+                    print("heading", heading)
+                    Wait(200)
+                    DeleteObject(object)
+                    print("heading2", heading)
                     TriggerServerEvent("wn_crafting:requestCraftingSpawn", craftingIndex, coords, heading)
                     placingCrafing = false
                 end
@@ -48,14 +53,16 @@ RegisterNetEvent("wn_crafting:spawnCrafting", function(index)
     end)
 end)
 
-RegisterNetEvent("wn_crafitng:spawnCrafting", function(craftingIndex, id, coords, heading)
-    local model = Config.PlacebleCraftings[craftingIndex].model
-    local objectModel = GetHashKey(model)
+RegisterNetEvent("wn_crafting:spawnCrafting", function(craftingIndex, id, coords, heading)
+    print("spawnCrafting", craftingIndex)
+    print("spawn heading", heading)
+    local objectModel = Config.PlacebleCraftings[craftingIndex].model
     local craftingData = Config.PlacebleCraftings[craftingIndex]
     object = CreateObject(objectModel, coords.x, coords.y, coords.z, heading, true, true, false)
-
+    SetEntityHeading(object, heading)
+    local zoneCoords = vector4(coords.x, coords.y, coords.z + 0.5, heading)
     local zoneName = ("crafting_%s_%s"):format(craftingIndex, id)
-    AddSphereZone(zoneName, coords, 1, {
+    AddSphereZone(zoneName, zoneCoords, 1, {
         {
             icon = craftingData.icon,
             label = craftingData.label,
@@ -68,7 +75,8 @@ RegisterNetEvent("wn_crafitng:spawnCrafting", function(craftingIndex, id, coords
             icon = craftingData.icon,
             label = "Remove crafting",
             onSelect = function()
-                TriggerEvent("wn_crafting:removeCrafting", id)
+                print("id", id)
+                TriggerServerEvent("wn_crafting:removeCrafting", id)
             end,
             distance = 1,
         },
@@ -82,7 +90,8 @@ RegisterNetEvent("wn_crafitng:spawnCrafting", function(craftingIndex, id, coords
     }
 end)
 
-RegisterNetEvent("wn_crafitng:deleteCrafting", function(id)
+RegisterNetEvent("wn_crafting:deleteCrafting", function(id)
+    print("Remove ID", index)
     local deleteObject = spawnedCraftings[id].object
     local craftingIndex = spawnedCraftings[id].index
     local deleteCrafting = ("crafting_%s_%s"):format(craftingIndex, id)
@@ -101,14 +110,15 @@ RegisterNetEvent('wn_crafting:menuPlaceble', function(craftingType)
     for _, craftingOption in ipairs(craftingData.items) do
         local co = craftingOption
         local reqSchematic = co.requiredSchematics
-        local disabled = false
+        local disable = false
         if reqSchematic ~= nil then
-            disabled = not hasPlayerRequiredSchematic(reqSchematic)
+            disable = not hasPlayerRequiredSchematic(reqSchematic)
+            print("disabled", disable)
         end
             local option = {
             title = co.title,
             description = co.description,
-            disable = disabled,
+            disabled = disabled,
             image = co.image,
             onSelect = function()
                 TriggerServerEvent('wn_crafting:giveitems', craftingType, co)

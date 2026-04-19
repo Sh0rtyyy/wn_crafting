@@ -2,20 +2,27 @@ local spawnedCraftings = spawnedCraftings or {}
 
 for index, data in pairs(Config.PlacebleCraftings) do
     local requiredItem = data.itemName
+    print(requiredItem)
     RegisterUsable(requiredItem, function(source)
         local src = source
         if not GetItem(requiredItem, 1, src) then return end
-        RemoveItem(requiredItem, 1, src)
-        TriggerClientEvent("wn_crafting:spawnCrafting", src, index)
+        TriggerClientEvent("wn_crafting:placeCrafting", src, index)
     end)
 end
 
-RegisterNetEvent("wn_crafting:requestCraftingSpawn", function(craftingIndex, coords)
+RegisterNetEvent("wn_crafting:requestCraftingSpawn", function(craftingIndex, coords, heading)
     local src = source
+    print("coords", coords)
     if not CheckDistance(src, coords) then
         print("Hačker")
         return
     end
+
+    print("Spawning ", craftingIndex)
+    print("heading", heading)
+
+    local requiredItem = Config.PlacebleCraftings[craftingIndex].itemName
+    RemoveItem(requiredItem, 1, src)
 
     local id = #spawnedCraftings + 1
 
@@ -29,6 +36,7 @@ RegisterNetEvent("wn_crafting:requestCraftingSpawn", function(craftingIndex, coo
 end)
 
 RegisterNetEvent("wn_crafting:removeCrafting", function(id)
+    print("id", id)
     local src = source
     if not spawnedCraftings[id] then
         print("Hačker")
@@ -36,7 +44,10 @@ RegisterNetEvent("wn_crafting:removeCrafting", function(id)
     end
 
     local craftingCoords = spawnedCraftings[id].coords
-    local giveItem = spawnedCraftings[id].craftingIndex
+    print("spawnedCraftings[id].craftingIndex", spawnedCraftings[id].index)
+    local craftingData = Config.PlacebleCraftings[spawnedCraftings[id].index]
+    local giveItem = craftingData.itemName
+    print("giveItem", giveItem)
     if not CheckDistance(src, craftingCoords) then
         print("Hačker")
         return

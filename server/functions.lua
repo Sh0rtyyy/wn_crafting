@@ -1,7 +1,14 @@
 if Config.Framework == "ESX" then
     ESX = exports["es_extended"]:getSharedObject()
+    RegisterUsable = ESX.RegisterUsableItem
+    Wait(2000)
+    AllJobs = ESX.GetJobs()
 elseif Config.Framework == "qbcore" then
+    QBCore = nil
     QBCore = exports['qb-core']:GetCoreObject()
+    RegisterUsable = QBCore.Functions.CreateUseableItem
+elseif Config.Framework == "qbox" then
+    AllJobs = exports.qbx_core:GetJobs()
 end
 
 function CheckDistance(source, TargetCoords)
@@ -9,7 +16,7 @@ function CheckDistance(source, TargetCoords)
 
     local coords = GetEntityCoords(GetPlayerPed(src))
     local distance = #(coords - TargetCoords)
-    if distance < maxDistance then
+    if distance < 10 then
         return true
     else
         return false

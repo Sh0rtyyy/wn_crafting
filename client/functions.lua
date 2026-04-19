@@ -68,7 +68,8 @@ if Config.Target == "ox" then
             coords = coords,
             radius = radius,
             name = name,
-            debug = targetDebug or debug,
+            --debug = targetDebug or debug,
+            debug = true,
             options = options
         })
         table.insert(targetZones, { name = name, id = target, creator = GetInvokingResource() })
